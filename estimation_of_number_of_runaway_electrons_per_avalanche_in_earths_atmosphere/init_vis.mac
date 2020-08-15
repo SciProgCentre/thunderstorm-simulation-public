@@ -10,4 +10,8 @@
 /vis/scene/add/date
 /vis/scene/add/hits
 
-/run/beamOn 1
+
+/gps/particle e-
+/gps/position 0.0 0.0 299.9 meter
+/gps/direction 0 0 -1
+/gps/ene/mono 1 MeV

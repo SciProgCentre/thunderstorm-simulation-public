@@ -13,12 +13,11 @@
 
 class StackingAction : public G4UserStackingAction {
 public:
-    StackingAction(Settings* settings);
+    explicit StackingAction(Settings* settings);
     G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track *aTrack) override;
 
 private:
     Settings* settings;
-    double cut = 0.05*CLHEP::MeV;
 };
 
 

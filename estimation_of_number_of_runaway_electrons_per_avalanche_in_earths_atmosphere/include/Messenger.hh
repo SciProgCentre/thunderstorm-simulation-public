@@ -22,7 +22,7 @@ private:
 public:
     explicit Messenger(Settings* settings);
 
-    void SetNewValue(G4UIcommand *command, G4String newValue) override;;
+    void SetNewValue(G4UIcommand *command, G4String newValue) override;
 private:
     std::string root_path = "/npm/";
     std::string thunderstorm_path = root_path + "thunderstorm/";

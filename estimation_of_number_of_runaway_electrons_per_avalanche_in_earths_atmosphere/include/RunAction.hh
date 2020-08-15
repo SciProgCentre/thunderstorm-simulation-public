@@ -7,27 +7,36 @@
 
 #include "G4UserRunAction.hh"
 #include "Utils.hh"
+#include "Output.hh"
+#include "fstream"
 
 class RunAction : public G4UserRunAction{
 private:
     Settings* settings;
+    CloudList* data;
+    std::ofstream* fout;
 public:
 
-    explicit RunAction(Settings* settings) : settings(settings){};
+    RunAction(Settings* settings, CloudList* data) : settings(settings), data(data){};
 
-    void BeginOfRunAction(G4Run *aRun) override;
+    void BeginOfRunAction(const G4Run *aRun) override;
 
-    void EndOfRunAction(G4Run *aRun) override;
+    void EndOfRunAction(const G4Run *aRun) override;
 
 };
 
-void RunAction::BeginOfRunAction(G4Run *aRun) {
+void RunAction::BeginOfRunAction(const G4Run *aRun) {
     G4UserRunAction::BeginOfRunAction(aRun);
+    fout = new std::ofstream;
+    fout->open(settings->output);
+    data->initializeRun(fout);
 
 }
 
-void RunAction::EndOfRunAction(G4Run *aRun) {
+void RunAction::EndOfRunAction(const G4Run *aRun) {
     G4UserRunAction::EndOfRunAction(aRun);
+    data->finishRun();
+    fout->close();
 }
 
 #endif //THUNDERSTORM_SIMULATION_PUBLIC_RUNACTION_HH

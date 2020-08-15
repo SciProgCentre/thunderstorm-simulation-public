@@ -12,7 +12,7 @@ G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track *aTrac
         return fUrgent;
     }
 
-    if (aTrack->GetKineticEnergy() < cut){
+    if (aTrack->GetKineticEnergy() < settings->cut){
         return fKill;
     }
 
@@ -51,5 +51,4 @@ G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track *aTrac
 }
 
 StackingAction::StackingAction(Settings *settings) : settings(settings){
-
 }

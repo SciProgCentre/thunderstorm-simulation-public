@@ -1,0 +1,6 @@
+/npm/thunderstorm/height 10000 m
+/npm/thunderstorm/length 600 m
+/npm/thunderstorm/field 300 kV/m
+/npm/thunderstorm/cut 0.05 MeV
+/npm/thunderstorm/gamma true
+/npm/thunderstorm/positron false

@@ -8,19 +8,26 @@
 #include "G4UserTrackingAction.hh"
 
 class TrackingAction : public G4UserTrackingAction {
+private:
+    Settings* settings;
+    CloudList* data;
 public:
-    void PreUserTrackingAction(G4Track *track) override;
 
-    void PostUserTrackingAction(G4Track *track) override;
+    TrackingAction(Settings* settings, CloudList* data) : settings(settings), data(data){};
+
+    void PreUserTrackingAction(const G4Track *track) override;
+
+    void PostUserTrackingAction(const G4Track *track) override;
 
 public:
 };
 
-void TrackingAction::PreUserTrackingAction(G4Track *track) {
+void TrackingAction::PreUserTrackingAction(const G4Track *track) {
     G4UserTrackingAction::PreUserTrackingAction(track);
+    data->addTrack(track);
 }
 
-void TrackingAction::PostUserTrackingAction(G4Track *track) {
+void TrackingAction::PostUserTrackingAction(const G4Track *track) {
     G4UserTrackingAction::PostUserTrackingAction(track);
 }
 

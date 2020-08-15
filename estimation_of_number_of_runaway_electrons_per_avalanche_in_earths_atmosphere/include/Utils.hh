@@ -20,7 +20,7 @@ struct Settings{
     bool disableGamma = false;
     bool disablePositron = true;
 
-    std::string output = "thunderstorm";
+    std::string output = "thunderstorm.pb.bin";
 };
 
 class Logger {
@@ -31,14 +31,14 @@ public:
         return  &logger;
     }
 
-    ~Logger(){};
+    ~Logger()= default;
 
-    void print(std::string message){
+    void print(const std::string& message){
         *clog << getTimeString() << " " << message << std::endl << std::flush;
     };
 
-    std::string getTimeString() {
-        time_t secondsTemp = time(NULL);
+    static std::string getTimeString() {
+        time_t secondsTemp = time(nullptr);
         tm *timeinfo = localtime(&secondsTemp);
         std::string time(asctime(timeinfo));
         time.pop_back();
@@ -51,8 +51,8 @@ private:
     Logger(){
         clog = &std::cout;
     };
-    Logger(Logger const&);
-    Logger& operator=(Logger const&);
+    Logger(Logger const&) = delete;
+    Logger& operator=(Logger const&) = delete;
     std::ostream* clog;
 };
 

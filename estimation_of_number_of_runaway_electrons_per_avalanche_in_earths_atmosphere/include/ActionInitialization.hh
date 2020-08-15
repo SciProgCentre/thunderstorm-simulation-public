@@ -9,7 +9,7 @@
 #include "StackingAction.hh"
 #include "RunAction.hh"
 #include "TrackingAction.hh"
-
+#include "EventAction.hh"
 
 class ActionInitialization : public G4VUserActionInitialization{
 private:
@@ -24,9 +24,12 @@ public:
         SetUserAction(gps);
         auto stacking = new StackingAction(settings);
         SetUserAction(stacking);
-        auto runAction = new RunAction(settings);
+        auto data = new CloudList();
+        auto runAction = new RunAction(settings, data);
         SetUserAction(runAction);
-        auto trackingAction = new TrackingAction();
+        auto eventAction = new EventAction(settings, data);
+        SetUserAction(eventAction);
+        auto trackingAction = new TrackingAction(settings, data);
         SetUserAction(trackingAction);
     }
 };

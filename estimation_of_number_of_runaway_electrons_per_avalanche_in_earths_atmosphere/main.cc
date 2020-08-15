@@ -11,6 +11,7 @@
 #include "ActionInitialization.hh"
 #include "PhysicsList.hh"
 #include "fstream"
+#include "Messenger.hh"
 
 long init_seed(){
     std::random_device rd;
@@ -20,6 +21,16 @@ long init_seed(){
 
 int main(int argc, char **argv) {
     auto settings = new Settings;
+    auto messenger = new Messenger(settings);
+
+    // Get the pointer to the User Interface manager
+    G4UImanager *UImanager = G4UImanager::GetUIpointer();
+
+    if (argc > 1){
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command + fileName);
+    }
 
     std::ofstream flog("thunderstorm.log");
     auto logger = Logger::instance();
@@ -29,31 +40,29 @@ int main(int argc, char **argv) {
     long seed = (settings->seed == -1) ? init_seed() : settings->seed;
     CLHEP::HepRandom::setTheSeed(seed);
 
-    G4UIExecutive *ui = nullptr;
-    if (argc == 1) {
-        ui = new G4UIExecutive(argc, argv);
-    }
+
     G4RunManager *runManager = new G4RunManager;
     runManager->SetUserInitialization(new DetectorConstruction(settings));
     runManager->SetUserInitialization(new PhysicsList(settings));
     runManager->SetUserInitialization(new ActionInitialization(settings));
+    runManager->SetNumberOfAdditionalWaitingStacks(4);
     runManager->Initialize();
 
     G4VisManager *visManager = new G4VisExecutive;
     visManager->Initialize();
 
-    // Get the pointer to the User Interface manager
-    G4UImanager *UImanager = G4UImanager::GetUIpointer();
+
 
     // Process macro or start UI session
     //
-    if (!ui) {
+    if (argc > 2) {
         // batch mode
         G4String command = "/control/execute ";
-        G4String fileName = argv[1];
+        G4String fileName = argv[2];
         UImanager->ApplyCommand(command + fileName);
     } else {
         // interactive mode
+        G4UIExecutive *ui =  new G4UIExecutive(argc, argv);
         UImanager->ApplyCommand("/control/execute init_vis.mac");
         ui->SessionStart();
         delete ui;

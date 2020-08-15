@@ -1,0 +1,11 @@
+/npm/thunderstorm/height 10000 m
+/npm/thunderstorm/length 400 m
+/npm/thunderstorm/field 200 kV/m
+/npm/thunderstorm/cut 0.05 MeV
+/npm/thunderstorm/gamma false
+/npm/thunderstorm/positron false
+/gps/particle e-
+/gps/position 0.0 0.0 199.9 meter
+/gps/direction 0 0 -1
+/gps/ene/mono 1 MeV
+/run/beamOn 100

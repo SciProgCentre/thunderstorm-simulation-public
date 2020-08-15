@@ -32,12 +32,12 @@ Messenger::Messenger(Settings *settings) : settings(settings){
     length = new G4UIcmdWithADoubleAndUnit(length_path.c_str(), this);
     length->SetGuidance("Set length of cloud");
     length->SetParameterName("length", false);
-    length->SetDefaultUnit("kV/m");
+    length->SetDefaultUnit("m");
 
     cut = new G4UIcmdWithADoubleAndUnit(cut_path.c_str(), this);
     cut->SetGuidance("Set minimal energy of particle");
-    cut->SetParameterName("length", false);
-    cut->SetDefaultUnit("kV/m");
+    cut->SetParameterName("cut", false);
+    cut->SetDefaultUnit("MeV");
 
 }
 
@@ -45,9 +45,9 @@ void Messenger::SetNewValue(G4UIcommand *command, G4String newValue) {
     if (command == seed){
         settings->seed = seed->GetNewIntValue(newValue);
     } else if (command == gamma){
-        settings->disableGamma = gamma->GetNewBoolValue(newValue);
+        settings->disableGamma = not gamma->GetNewBoolValue(newValue);
     } else if (command == positron){
-        settings->disablePositron = positron->GetNewBoolValue(newValue);
+        settings->disablePositron = not positron->GetNewBoolValue(newValue);
     } else if (command == field){
         settings->field = field->GetNewDoubleValue(newValue);
     }else if (command == field){

@@ -22,7 +22,7 @@ namespace ISA {
     const G4double g = 9.80665 * m / (s * s);
     const G4double M = 0.0289644 * kg / mole;
     const G4double R = 8.31447 * joule / (kelvin * mole);
-};
+}
 
 DetectorConstruction::DetectorConstruction(Settings *settings) : settings(settings){
 }
@@ -95,7 +95,7 @@ G4Material *DetectorConstruction::createAirForHeight(G4double height) {
     std::string name = "_" + std::to_string((int) ceil(height / meter));
     Logger::instance()->print("airHeight" + name);
     Logger::instance()->print("Density: " + std::to_string(density / (kg / m3)) + " kg/m3");
-    Logger::instance()->print("Pressure: " + std::to_string(pressure / pascal) + " pascal");
+    Logger::instance()->print("Pressure: " + std::to_string(pressure / atmosphere) + " atm");
     Logger::instance()->print("Temperature: " + std::to_string(temperature / kelvin) + " kelvin");
     G4Material *airHeight = new G4Material("airHeight" + name, density, air,
                                            kStateGas, temperature, pressure);
