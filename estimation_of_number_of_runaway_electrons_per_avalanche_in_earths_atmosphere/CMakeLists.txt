@@ -7,6 +7,9 @@ PROJECT(estimation_of_number_of_runaway_electrons_per_avalanche_in_earths_atmosp
 find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS thunderstorm.proto)
+protobuf_generate_python(PY_SOURCES thunderstorm.proto)
+
+add_custom_target(py_proto ALL DEPENDS ${PY_SOURCES})
 
 FIND_PACKAGE(Geant4 REQUIRED ui_all vis_all)
 
@@ -35,6 +38,7 @@ set(PROGRAM_SCRIPTS
         init_vis.mac
         settings.mac
         run.mac
+        process.py
         )
 
 foreach(_script ${PROGRAM_SCRIPTS})

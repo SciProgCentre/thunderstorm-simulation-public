@@ -20,11 +20,14 @@ protected:
     int count = 0;
     void write(){
         if (protoList != nullptr){
-            int size = protoList->ByteSize();
-            out->write(reinterpret_cast<char*>(&size), sizeof size);
-            protoList->SerializeToOstream(out);
-            protoList->Clear();
-            count = 0;
+            long size = protoList->ByteSizeLong();
+            if (size != 0){
+                out->write(reinterpret_cast<char*>(&size), sizeof size);
+                protoList->SerializeToOstream(out);
+                protoList->Clear();
+                count = 0;
+            }
+
         }
     }
 
@@ -60,22 +63,6 @@ public:
     }
 };
 
-
-//class ProtoManager {
-//
-//public:
-//    static ProtoManager *instance() {
-//        static ProtoManager protoManager;
-//        return &protoManager;
-//    }
-//private:
-//    ProtoManager() = default;
-//
-//    ProtoManager(ProtoManager const &);
-//
-//    ProtoManager &operator=(ProtoManager const &);
-//};
-
 class CloudList : public ProtoWrapper<thunderstorm::CloudList>{
 public:
     void initializeEvent(int eventID) override {
@@ -84,7 +71,6 @@ public:
     }
 
     void addTrack(const G4Track *track) override {
-        ProtoWrapper::addTrack(track);
         auto data = protoList->add_cloud();
         data->set_id(track->GetTrackID());
         data->set_parent_id( track->GetParentID());
@@ -96,6 +82,7 @@ public:
         data->set_radius(position.perp() / CLHEP::meter);
         data->set_z(position.getZ() / CLHEP::meter);
         data->set_time(track->GetGlobalTime() / CLHEP::ns);
+        ProtoWrapper::addTrack(track);
     }
 };
 

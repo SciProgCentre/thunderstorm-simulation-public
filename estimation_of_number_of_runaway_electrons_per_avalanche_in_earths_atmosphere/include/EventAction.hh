@@ -18,6 +18,7 @@ public:
     void BeginOfEventAction(const G4Event *anEvent) override {
         G4UserEventAction::BeginOfEventAction(anEvent);
         data->initializeEvent(anEvent->GetEventID());
+        Logger::instance()->print("Start event: " + std::to_string(anEvent->GetEventID()));
     }
 
     void EndOfEventAction(const G4Event *anEvent) override {
