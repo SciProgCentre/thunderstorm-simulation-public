@@ -3,3 +3,5 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.3 FATAL_ERROR)
 PROJECT(thunderstorm-simulation-public)
 
 add_subdirectory(estimation_of_number_of_runaway_electrons_per_avalanche_in_earths_atmosphere)
+
+add_subdirectory(bgo-detector)

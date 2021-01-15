@@ -1,0 +1,17 @@
+/vis/open OGL
+/control/saveHistory
+#/vis/verbose errors
+/vis/viewer/set/background white
+/vis/geometry/set/colour all -1 0 0 0
+/vis/drawVolume worlds
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate
+/vis/scene/add/axes
+/vis/scene/add/date
+/vis/scene/add/hits
+
+
+/gps/particle e-
+/gps/position 0.0 0.0 299.9 meter
+/gps/direction 0 0 -1
+/gps/ene/mono 1 MeV

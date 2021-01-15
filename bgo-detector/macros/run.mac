@@ -1,0 +1,5 @@
+/gps/particle gamma
+/gps/position 0.0 0.0 20.0 millimeter
+/gps/direction 0 0 -1
+/gps/ene/mono 0.3 MeV
+/run/beamOn 1000
