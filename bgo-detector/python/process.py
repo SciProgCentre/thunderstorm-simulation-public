@@ -1,4 +1,5 @@
 import os
+import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,7 +38,7 @@ def main():
     bins_high = np.linspace(1, 100, 100)
     hists_h = []
     hists_l = []
-    with open_file("result.hdf5") as h5file:
+    with open_file(sys.argv[1]) as h5file:
         for group in h5file.root:
             data = h5file.get_node(group, "deposit")
             number = data.attrs["number"]
