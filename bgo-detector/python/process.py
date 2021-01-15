@@ -18,15 +18,19 @@ def save_ratio(energy, ratio):
 
 def plot_response(bins_l, hist_l, bins_h, hist_h, energy):
     indx = np.argsort(energy)
-    bins = np.hstack((bins_l[:-1], bins_h))
-    for i in indx:
-        hists = np.hstack((hist_l[i], hist_h[i]))
-        plt.step(bins[:-1], hists)
-        plt.xscale("log")
+    for i, e in enumerate(energy):
+        fig = plt.figure(figsize=(10,5))
+        fig.add_subplot(121)
+        plt.step(bins_l[:-1], hist_l[i])
         plt.xlabel("Энергия, МэВ")
-        plt.ylabel("Энерговыделение, МэВ")
-        plt.tight_layout()
-        plt.savefig("plot/hist_{}_MeV.pdf".format(energy[i]), format="pdf", transparent=True)
+        plt.ylabel("Число событий")
+        fig.add_subplot(122)
+        plt.step(bins_h[:-1], hist_h[i])
+        plt.xlabel("Энергия, МэВ")
+        plt.ylabel("Число событий")
+        # plt.tight_layout()
+        plt.savefig("plot/hist_{:.2f}_MeV.pdf".format(energy[i]), format="pdf", transparent=True)
+        plt.cla()
         plt.clf()
 
 
