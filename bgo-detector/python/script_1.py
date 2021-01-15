@@ -3,6 +3,7 @@ from tables import open_file, Filters
 import os
 from string import Template
 import numpy as np
+import shutil
 
 GPS_TEMPLATE=Template(
 """/gps/particle gamma
@@ -16,7 +17,8 @@ GPS_TEMPLATE=Template(
 
 class Collector:
 
-    def __init__(self):
+    def __init__(self, clear=False):
+        self.clear = clear
         self.h5file = open_file("result.hdf5", "w", filters=Filters(complevel=3, fletcher32=True))
 
     def __call__(self, process_data: ProcessData):
@@ -29,6 +31,8 @@ class Collector:
         array.attrs["number"] = gps["number"]
         array.attrs["energy"] = gps["energy"]
         array.flush()
+        if self.clear:
+            shutil.rmtree(process_data.path)
 
     def close(self):
         self.h5file.close()
@@ -39,13 +43,13 @@ def generator():
         yield ProcessData(
             "sim/sim{}".format(str(i).rjust(4,"0")),
             Parameters(gps={"energy": energy[i],
-                            "number": int(1e9)}),
+                            "number": int(1e6)}),
             "../../../geant4-bgo.exe",
             GPS_TEMPLATE
         )
 
 def main():
-    collector = Collector()
+    collector = Collector(True)
     try:
         multirun(generator, collector)
     finally:
