@@ -1,5 +1,5 @@
 from run import multirun, ProcessData, Parameters
-from tables import open_file
+from tables import open_file, Filters
 import os
 from string import Template
 import numpy as np
@@ -17,7 +17,7 @@ GPS_TEMPLATE=Template(
 class Collector:
 
     def __init__(self):
-        self.h5file = open_file("result.hdf5", "w")
+        self.h5file = open_file("result.hdf5", "w", filters=Filters(complevel=3, fletcher32=True))
 
     def __call__(self, process_data: ProcessData):
         name = os.path.split(process_data.path)[-1]
