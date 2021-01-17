@@ -13,7 +13,10 @@
 struct Settings{
     long seed = -1;
     G4double size = 15.0*CLHEP::millimeter;
+    G4double length = 15.0*CLHEP::millimeter;
+    G4String material = "G4_BGO";
     std::string output = "deposit.txt";
+
 };
 
 class Logger {

@@ -36,10 +36,11 @@ TARGET_LINK_LIBRARIES(geant4-bgo.exe ${Geant4_LIBRARIES}
 set(PROGRAM_SCRIPTS
         init_vis.mac
         python/run.py
+        python/process.py
         python/script_1.py
+        python/script_2_uniform.py
         macros/run.mac
         macros/settings.mac
-#        process.py
         )
 
 foreach(_script ${PROGRAM_SCRIPTS})

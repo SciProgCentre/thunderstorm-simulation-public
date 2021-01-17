@@ -9,6 +9,7 @@
 
 G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track *aTrack) {
     if (aTrack->GetParentID() == 0){
+        std::cout<<aTrack->GetKineticEnergy()/MeV<<std::endl;
         return fUrgent;
     }
     return G4UserStackingAction::ClassifyNewTrack(aTrack);

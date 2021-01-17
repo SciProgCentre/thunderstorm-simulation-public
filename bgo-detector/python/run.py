@@ -6,6 +6,8 @@ from typing import Optional
 from string import Template
 import shutil
 import logging
+import numpy as np
+from tables import open_file, Filters
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -67,3 +69,32 @@ def multirun(generator, collector):
     with Pool() as p:
         for result in p.imap_unordered(run, generator()):
             collector(result)
+
+
+
+class Collector:
+
+    def __init__(self, clear=False):
+        self.clear = clear
+        self.h5file = open_file("result.hdf5", "w", filters=Filters(complevel=3, fletcher32=True))
+
+    def __call__(self, process_data: ProcessData):
+        name = os.path.split(process_data.path)[-1]
+        print(name)
+        group = self.h5file.create_group(self.h5file.root, name)
+        data = np.loadtxt(os.path.join(process_data.path, "deposit.txt"))
+        array = self.h5file.create_array(group, "deposit", obj=data)
+        gps = process_data.parameters.gps
+        if gps is not None:
+            for key, value in gps.items():
+                array.attrs[key] = value
+        set = process_data.parameters.settings
+        if set is not None:
+            for key, value in set.items():
+                array.attrs[key] = value
+        array.flush()
+        if self.clear:
+            shutil.rmtree(process_data.path)
+
+    def close(self):
+        self.h5file.close()

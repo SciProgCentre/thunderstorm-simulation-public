@@ -5,7 +5,7 @@
 #include <G4UIcmdWithABool.hh>
 #include "Messenger.hh"
 
-Messenger::Messenger(Settings *settings) : settings(settings){
+Messenger::Messenger(Settings *settings) : settings(settings) {
     npm = new G4UIdirectory(root_path.c_str());
     thunderstorm = new G4UIdirectory(thunderstorm_path.c_str());
 
@@ -16,22 +16,26 @@ Messenger::Messenger(Settings *settings) : settings(settings){
 
 
     size = new G4UIcmdWithADoubleAndUnit(size_path.c_str(), this);
-    size->SetGuidance("Set size of cube");
+    size->SetGuidance("Set width of detector");
     size->SetParameterName("size", false);
-    size->SetDefaultUnit("mm");
+    size->SetDefaultUnit("millimeter");
 
+    length = new G4UIcmdWithADoubleAndUnit(length_path.c_str(), this);
+    length->SetGuidance("Set length of detector");
+    length->SetParameterName("length", false);
+    length->SetDefaultUnit("millimeter");
 
 
 }
 
 void Messenger::SetNewValue(G4UIcommand *command, G4String newValue) {
-    if (command == seed){
+    if (command == seed) {
         settings->seed = seed->GetNewIntValue(newValue);
-    }
-     else if (command == size){
+    } else if (command == size) {
         settings->size = size->GetNewDoubleValue(newValue);
-    }
-    else {
+    } else if (command == length) {
+        settings->length = length->GetNewDoubleValue(newValue);
+    } else {
         G4UImessenger::SetNewValue(command, newValue);
     }
 

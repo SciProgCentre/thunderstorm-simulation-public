@@ -11,7 +11,7 @@
 /vis/scene/add/hits
 
 
-/gps/particle e-
-/gps/position 0.0 0.0 299.9 meter
+/gps/particle gamma
+/gps/position 0.0 0.0 20.0 millimeter
 /gps/direction 0 0 -1
-/gps/ene/mono 1 MeV
+/gps/ene/mono 1.30 MeV
