@@ -18,7 +18,8 @@
 class DetectorConstruction : public G4VUserDetectorConstruction {
 private:
     Settings* settings;
-    G4LogicalVolume* bgo_vol;
+    G4LogicalVolume* det_vol;
+    G4Material *detMaterial;
 public:
     explicit DetectorConstruction(Settings* settings);
 

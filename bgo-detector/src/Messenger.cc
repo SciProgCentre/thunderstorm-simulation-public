@@ -25,6 +25,9 @@ Messenger::Messenger(Settings *settings) : settings(settings) {
     length->SetParameterName("length", false);
     length->SetDefaultUnit("millimeter");
 
+    material = new G4UIcmdWithAString(material_path.c_str(), this);
+    material->SetGuidance("Set copy of detector");
+    material->SetParameterName("material", false);
 
 }
 
@@ -35,6 +38,8 @@ void Messenger::SetNewValue(G4UIcommand *command, G4String newValue) {
         settings->size = size->GetNewDoubleValue(newValue);
     } else if (command == length) {
         settings->length = length->GetNewDoubleValue(newValue);
+    } else if (command == material) {
+        settings->material = newValue;
     } else {
         G4UImessenger::SetNewValue(command, newValue);
     }

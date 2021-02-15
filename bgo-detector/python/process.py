@@ -1,6 +1,6 @@
 import os
 import sys
-
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from tables import open_file
@@ -34,7 +34,7 @@ def plot_response(bins_l, hist_l, bins_h, hist_h, energy):
         plt.clf()
 
 
-def main():
+def old_main():
     os.makedirs("plot", exist_ok=True)
     energy_list = []
     ratio_list = []
@@ -59,8 +59,46 @@ def main():
     save_ratio(energy_list, ratio_list)
     plot_response(bins_low, hists_l, bins_high, hists_h, energy_list)
 
+def create_parser():
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument("-i", "--input")
+    parser.add_argument('--full-absorption', action='store_true',
+                    help='')
+    return parser
+def main():
+    args = create_parser().parse_args()
+
+    if args.full_absortion:
+        full_absortion(args)
+
     return 0
 
+
+def full_absortion(args):
+    resukt = []
+    with open_file(args.input) as h5file:
+        for group in h5file.root:
+            data = h5file.get_node(group, "deposit")
+            number = data.attrs["number"]
+            energy = data.attrs["energy"]
+            data = data.read()
+            max_ = np.max(data)
+            delta = np.sqrt(max_)
+            indx = data > max_ -delta
+            probability_1 = indx/number
+            probability_2 = indx/data.size
+            resukt.append((energy, probability_1, probability_2))
+    data = np.array(resukt)
+
+    plt.figure(figsize=(5,10))
+    plt.subplots(121)
+    plt.plot(data[0,:], data[1,:])
+    plt.xscale("log")
+    plt.xlabel()
+    plt.subplots(122)
+    plt.plot(data[0,:], data[2,:])
+    plt.tight_layout()
+    plt.savefig("absortion.pdf", spi= 600)
 
 if __name__ == '__main__':
     main()

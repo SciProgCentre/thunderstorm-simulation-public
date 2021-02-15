@@ -41,6 +41,8 @@ void RunAction::printSettingsInLog() {
     auto logger = Logger::instance();
     std::string text = "Start run with ";
     logger->print(text + "size = " + std::to_string(settings->size/CLHEP::millimeter) + " mm" );
+    logger->print(text + "length = " + std::to_string(settings->length/CLHEP::millimeter) + " mm" );
+    logger->print(text + "material = " + settings->material);
 }
 
 #endif //THUNDERSTORM_SIMULATION_PUBLIC_RUNACTION_HH

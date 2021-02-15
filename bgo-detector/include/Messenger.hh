@@ -29,6 +29,7 @@ private:
     std::string seed_path = root_path + "seed";
     std::string size_path = thunderstorm_path + "size";
     std::string length_path = thunderstorm_path + "length";
+    std::string material_path = thunderstorm_path + "material";
 
     G4UIdirectory * npm;
     G4UIdirectory * thunderstorm;
@@ -36,6 +37,7 @@ private:
     G4UIcmdWithAnInteger *seed;
     G4UIcmdWithADoubleAndUnit* size;
     G4UIcmdWithADoubleAndUnit* length;
+    G4UIcmdWithAString* material;
 
 };
 
