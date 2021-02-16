@@ -3,9 +3,10 @@ from string import Template
 import numpy as np
 
 SETTINGS_TEMPLATE = Template(
-    """/npm/thunderstorm/size 15 millimeter
+"""/npm/thunderstorm/size 15 millimeter
 /npm/thunderstorm/length ${length} millimeter
-    """
+/npm/thunderstorm/material ${material}
+"""
 )
 
 GPS_TEMPLATE = Template(
@@ -50,7 +51,8 @@ def generator():
                     "position": pos
                 },
                 settings={
-                    "length": length
+                    "length": length,
+                    "material" : "NPM_YSO"
                 }
             ),
 
