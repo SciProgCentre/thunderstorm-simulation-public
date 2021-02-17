@@ -39,6 +39,7 @@ set(PROGRAM_SCRIPTS
         python/process.py
         python/script_1.py
         python/script_2_uniform.py
+        python/responce_matrix_1.py
         macros/run.mac
         macros/settings.mac
         )
